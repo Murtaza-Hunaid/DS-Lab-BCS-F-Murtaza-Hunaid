@@ -12,13 +12,13 @@ public:
 };
 
 Node* insertEnd(Node* head, int value) {
-    Node* newNode = new Node(value);
+    Node* new_node = new Node(value);
     if (head == nullptr) {
-        return newNode; }
+        return new_node; }
     Node* temp = head;
     while (temp->next != nullptr) {
         temp = temp->next; }
-    temp->next = newNode;
+    temp->next = new_node;
     return head;
 }
 
