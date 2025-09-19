@@ -1,11 +1,11 @@
 #include <iostream>
 using namespace std;
 
-void printNumbs(int n) {
+void printNumbers(int n) {
     if (n < 1) {
         return; }
     cout << n << " ";
-    printNumbs(n - 1);
+    printNumbers(n - 1);
 }
 
 int main() {
@@ -13,7 +13,7 @@ int main() {
     cout << "Enter a number: ";
     cin >> num;
     cout << "Numbers from " << num << " to 1: ";
-    printNumbs(num);
+    printNumbers(num);
     cout << endl;
     return 0;
 }
