@@ -1,71 +1,74 @@
 #include <iostream>
 using namespace std;
 
-bool isSafe(int** arr, int x, int y, int n) {
-    if (x < n && y < n && x >= 0 && y >= 0 && arr[x][y] == 1) {
+#define N 5   // size
+
+// to print the solution matrix
+void printSolution(int sol[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++)
+            cout << sol[i][j] << " ";
+        cout << endl;
+    }
+}
+
+// Check if maze[x][y] is safe to visit
+bool isSafe(int maze[N][N], int x, int y) {
+    return (x >= 0 && x < N && y >= 0 && y < N && maze[x][y] == 1);
+}
+
+// Backtracking utility for 4 directions
+bool solveMazeUtil(int maze[N][N], int x, int y, int sol[N][N]) {
+    // WHEN destination is reached
+    if (x == N - 1 && y == N - 1) {
+        sol[x][y] = 1;
         return true;
     }
+
+    if (isSafe(maze, x, y) && sol[x][y] == 0) {
+        sol[x][y] = 1;
+
+        // Move Right
+        if (solveMazeUtil(maze, x, y + 1, sol)) return true;
+
+        // Move Down
+        if (solveMazeUtil(maze, x + 1, y, sol)) return true;
+
+        // Move Left
+        if (solveMazeUtil(maze, x, y - 1, sol)) return true;
+
+        // Move Up
+        if (solveMazeUtil(maze, x - 1, y, sol)) return true;
+
+        // FOR Backtrack
+        sol[x][y] = 0;
+        return false;
+    }
+
     return false;
 }
 
-bool ratInMaze(int** arr, int x, int y, int n, int** solArr) {
-    if ((x == (n - 1)) && (y == (n - 1))) {
-        solArr[x][y] = 1;
-        return true;
+void solveMaze(int maze[N][N]) {
+    int sol[N][N] = {0};
+
+    if (!solveMazeUtil(maze, 0, 0, sol)) {
+        cout << "No solution exists\n";
+        return;
     }
 
-    if (isSafe(arr, x, y, n)) {
-        solArr[x][y] = 1;
-
-        if (ratInMaze(arr, x + 1, y, n, solArr)) {
-            return true; 
-        }
-        if (ratInMaze(arr, x, y + 1, n, solArr)) {
-            return true; 
-        }
-        if (ratInMaze(arr, x - 1, y, n, solArr)) {
-            return true; 
-        }
-        if (ratInMaze(arr, x, y - 1, n, solArr)) {
-            return true; 
-        }
-
-        solArr[x][y] = 0; 
-        return false;
-    }
-    
-    return false;
+    cout << "Path found (4 directions):\n";
+    printSolution(sol);
 }
 
 int main() {
-    int n = 5;
-
-    int maze[5][5] = {
+    int maze[N][N] = {
         {1, 0, 0, 0, 0},
         {1, 1, 0, 1, 0},
         {0, 1, 0, 1, 0},
         {1, 1, 1, 1, 0},
-        {0, 0, 0, 1, 1} };
-    int** arr = new int*[n];
-    int** solArr = new int*[n];
-    for (int i = 0; i < n; i++) {
-        arr[i] = new int[n];
-        solArr[i] = new int[n];
-        for (int j = 0; j < n; j++) {
-            arr[i][j] = maze[i][j];
-            solArr[i][j] = 0; } }
-    if (ratInMaze(arr, 0, 0, n, solArr)) {
-        cout << "Path found (1 is the path):" << endl;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                cout << solArr[i][j] << " "; }
-            cout << endl; } } 
-	else {
-        cout << "No path exists" << endl; }
-    for (int i = 0; i < n; i++) {
-        delete[] arr[i];
-        delete[] solArr[i]; }
-    delete[] arr;
-    delete[] solArr;
+        {0, 0, 0, 1, 1}
+    };
+
+    solveMaze(maze);
     return 0;
 }
