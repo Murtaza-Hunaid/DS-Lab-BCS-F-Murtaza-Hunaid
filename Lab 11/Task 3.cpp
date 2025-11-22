@@ -77,8 +77,8 @@ int main() {
     Hash hashTable;  
     hashTable.insert("A", "Apple");
     hashTable.insert("B", "Banana");
-    hashTable.insert("C", "Cherry");
-    hashTable.insert("A", "Apricot");    
+    hashTable.insert("C", "Strawberry");
+    hashTable.insert("A", "Pomegranate");    
     cout << "\nSearch operations:" << endl;
     cout << "Search A: " << hashTable.search("A") << endl;
     cout << "Search B: " << hashTable.search("B") << endl;
@@ -90,8 +90,8 @@ int main() {
     hashTable.remove("X");    
     cout << "\nAfter deleting:" << endl;
     hashTable.display();  
-    hashTable.insert("D", "Date");
-    hashTable.insert("E", "Elderberry");
+    hashTable.insert("D", "Melon");
+    hashTable.insert("E", "Mango");
     cout << "Final:" << endl;
     hashTable.display();
     return 0;
